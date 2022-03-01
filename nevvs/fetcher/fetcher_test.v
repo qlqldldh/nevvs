@@ -1,6 +1,5 @@
 import os
 import conf
-import rss
 import fetcher
 
 fn test_fetch_channel_return_channel() {
