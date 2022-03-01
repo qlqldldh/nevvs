@@ -10,21 +10,21 @@ pub:
 	pub_date string
 }
 
-fn get_item(txt string) Item {
-	contents := parse_xml_element(txt, "item")
+fn get_item(txt string) ?Item {
+	contents := parse_xml_element(txt, "item")?
 
 	return Item {
-		title: parse_xml_element(contents, "title"),
-		link: parse_xml_element(contents, "link"),
-		description: parse_xml_element(contents, "description"),
-		author: parse_xml_element(contents, "author"),
-		pub_date: parse_xml_element(contents, "pubDate"),
+		title: parse_xml_element(contents, "title")?,
+		link: parse_xml_element(contents, "link")?,
+		description: remove_cdata_exp(parse_xml_element(contents, "description")?),
+		author: remove_cdata_exp(parse_xml_element(contents, "author")?),
+		pub_date: parse_xml_element(contents, "pubDate")?,
 	}
 }
 
-fn get_items(txt string) []Item {
+fn get_items(txt string) ?[]Item {
 	delimiter := "</item>"
-	item_strs := txt.split(delimiter).filter(it != "")
+	item_strs := txt.split(delimiter).map(it.trim("\n\r")).filter(it != "")
 
-	return item_strs.map(get_item(it + delimiter))
+	return item_strs.map(get_item(it + delimiter)?)
 }

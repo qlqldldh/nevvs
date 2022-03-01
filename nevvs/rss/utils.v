@@ -1,4 +1,4 @@
-module parser
+module rss
 
 import strings
 
@@ -12,8 +12,11 @@ fn remove_cdata_exp(txt string) string {
 	return result
 }
 
-fn parse_xml_element(contents string, t string) string {
+fn parse_xml_element(contents string, t string) ?string {
 	result := strings.find_between_pair_string(contents, "<$t>", "</$t>")
+	if result == "" {
+		return error("not existed xml element in text. [type: $t]")
+	}
 
-	return remove_cdata_exp(result)
+	return result
 }
