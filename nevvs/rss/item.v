@@ -24,7 +24,7 @@ fn get_item(txt string) ?Item {
 
 fn get_items(txt string) ?[]Item {
 	delimiter := "</item>"
-	item_strs := txt.split(delimiter).map(it.trim("\n\r")).filter(it != "")
+	item_strs := txt.split(delimiter).map(it.trim("\n\r\t")).filter(it != "")
 
 	return item_strs.map(get_item(it + delimiter)?)
 }
