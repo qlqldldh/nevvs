@@ -9,7 +9,12 @@
 - Incoming Webhook plugin for Slack
 
 ## Usage
-### 1. Create `.env.{stage}` file in nevvs directory
+### 1. Create `.env.{stage}` file in nevvs directory and set stage as an env variable
+
+- set stage as an env variable<br>
+`export STAGE={stage}`
+
+- Fields in env file
 
 | Field | Description |
 |-------|-------------|
