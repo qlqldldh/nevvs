@@ -23,7 +23,7 @@ pub struct Attachment {
 	footer string
 }
 
-pub fn item_to_attachment(item rss.Item, copyright string) Attachment {
+fn item_to_attachment(item rss.Item, copyright string) Attachment {
 	return Attachment {
 		fallback: "New IT News",
 		pretext: item.pub_date,
@@ -36,6 +36,10 @@ pub fn item_to_attachment(item rss.Item, copyright string) Attachment {
 	}
 }
 
+fn (wb WebHookForm) to_json() string {
+	return json.encode(wb)
+}
+
 pub fn webhook_from_channel(channel rss.Channel) WebHookForm {
 	items := hist.filter_old_articles(channel.items)
 
@@ -43,10 +47,6 @@ pub fn webhook_from_channel(channel rss.Channel) WebHookForm {
 		channel: os.getenv("SLACK_CHANNEL"),
 		attachments: items.map(item_to_attachment(it, channel.copyright)),
 	}
-}
-
-pub fn (wb WebHookForm) to_json() string {
-	return json.encode(wb)
 }
 
 pub fn (wb WebHookForm) post() http.Response {

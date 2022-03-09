@@ -1,5 +1,7 @@
 module rss
 
+import net.http
+
 pub struct Channel {
 pub:
 	title string
@@ -11,7 +13,7 @@ pub:
 	items []Item
 }
 
-pub fn get_channel(txt string) ?Channel {
+fn get_channel(txt string) ?Channel {
 	contents := parse_xml_element(txt, "channel")?
 
 	return Channel {
@@ -23,4 +25,10 @@ pub fn get_channel(txt string) ?Channel {
 		last_build_date: parse_xml_element(contents, "lastBuildDate")?,
 		items: get_items(contents.split("</lastBuildDate>")[1])?,
 	}
+}
+
+pub fn fetch_channel(url string) ?Channel{
+	resp := http.get(url) or {panic(err)}
+
+	return get_channel(resp.text)
 }
