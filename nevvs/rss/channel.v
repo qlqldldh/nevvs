@@ -2,7 +2,7 @@ module rss
 
 import net.http
 
-pub struct Channel {
+pub struct RSSChannel {
 pub:
 	title string
 	link string
@@ -13,10 +13,10 @@ pub:
 	items []Item
 }
 
-fn get_channel(txt string) ?Channel {
+fn get_channel(txt string) ?RSSChannel {
 	contents := parse_xml_element(txt, "channel")?
 
-	return Channel {
+	return RSSChannel {
 		title: parse_xml_element(contents, "title")?,
 		link: parse_xml_element(contents, "link")?,
 		description: parse_xml_element(contents, "description")?,
@@ -27,7 +27,7 @@ fn get_channel(txt string) ?Channel {
 	}
 }
 
-pub fn fetch_channel(url string) ?Channel{
+pub fn fetch_channel(url string) ?RSSChannel{
 	resp := http.get(url) or {panic(err)}
 
 	return get_channel(resp.text)

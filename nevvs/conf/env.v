@@ -43,7 +43,7 @@ fn parse_raw_env_cfg(env_cfg_raw string) map[string]string {
 	return result
 }
 
-pub fn set_env_cfg(stage string) ?int {
+pub fn set_env_cfg(stage string) ? {
 	env_cfg_raw := load_raw_env_cfg(stage)?
 	cfg_map := parse_raw_env_cfg(env_cfg_raw)
 	mut res_code := 0
@@ -51,10 +51,7 @@ pub fn set_env_cfg(stage string) ?int {
 	for name, value in cfg_map {
 		res_code = os.setenv(name, value, true)
 		if res_code == -1 {
-			eprintln("ERROR: Fail to set env config.")
-			return res_code
+			return error("ERROR: Fail to set env config.")
 		}
 	}
-
-	return res_code
 }
