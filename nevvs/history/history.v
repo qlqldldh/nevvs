@@ -6,9 +6,9 @@ import rss
 const article_history_file = "articles"
 
 fn load_article_history() []string {
-	article_history := $embed_file("articles")
+	article_history := os.read_lines(article_history_file) or {panic(err)}
 
-	return article_history.str().split("\n")
+	return article_history
 }
 
 pub fn filter_old_articles(items []rss.Item) []rss.Item {

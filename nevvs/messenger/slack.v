@@ -8,7 +8,8 @@ import history as hist
 
 
 pub struct WebHookForm {
-	slack_channel string
+pub:
+	channel string
 	attachments []Attachment
 }
 
@@ -44,7 +45,7 @@ pub fn webhook_from_channel(channel rss.RSSChannel) WebHookForm {
 	items := hist.filter_old_articles(channel.items)
 
 	return WebHookForm {
-		slack_channel: os.getenv("SLACK_CHANNEL"),
+		channel: os.getenv("SLACK_CHANNEL"),
 		attachments: items.map(item_to_attachment(it, channel.copyright)),
 	}
 }

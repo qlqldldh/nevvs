@@ -14,6 +14,10 @@ pub fn notify_news() {
 	channel := rss.fetch_channel(os.getenv("RSS_URL")) or {panic(err)}
 
 	web_hook_form := msgr.webhook_from_channel(channel)
+	if web_hook_form.attachments.len == 0 {
+		println("Already up to date.")
+		return
+	}
 	resp := web_hook_form.post()
 
 	if http.status_from_int(resp.status_code) != http.Status.ok {

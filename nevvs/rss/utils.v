@@ -4,7 +4,7 @@ import strings
 
 
 fn remove_cdata_exp(txt string) string {
-	result := strings.find_between_pair_string(txt, "<![CDATA[ ", " ]]>")
+	result := strings.find_between_pair_string(txt, "<![CDATA[", "]]>")
 	if result == "" {
 		return txt
 	}
@@ -18,5 +18,5 @@ fn parse_xml_element(contents string, t string) ?string {
 		return error("not existed xml element in text. [type: $t]")
 	}
 
-	return result
+	return result.replace("&quot;", "\"").replace("&apos;", "'")
 }
