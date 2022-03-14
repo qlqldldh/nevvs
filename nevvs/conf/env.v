@@ -5,8 +5,7 @@ import os
 const max_env_cfg_size = 1000
 
 fn open_env_cfg(stage string) ?os.File {
-	root_path := os.getwd()
-	return os.open("$root_path/.env.$stage")
+	return os.open(".env.$stage")
 }
 
 fn load_raw_env_cfg(stage string) ?string {

@@ -1,6 +1,5 @@
 module messenger
 
-import os
 import json
 import net.http
 import rss
@@ -41,18 +40,17 @@ fn (wb WebHookForm) to_json() string {
 	return json.encode(wb)
 }
 
-pub fn webhook_from_channel(channel rss.RSSChannel) WebHookForm {
+pub fn webhook_from_channel(channel rss.RSSChannel, slack_channel string) WebHookForm {
 	items := hist.filter_old_articles(channel.items)
 
 	return WebHookForm {
-		channel: os.getenv("SLACK_CHANNEL"),
+		channel: slack_channel,
 		attachments: items.map(item_to_attachment(it, channel.copyright)),
 	}
 }
 
-pub fn (wb WebHookForm) post() http.Response {
-	slack_url := os.getenv("SLACK_URL")
-	resp := http.post_json(slack_url, wb.to_json()) or {panic(err)}
+pub fn (wb WebHookForm) post(endpoint string) http.Response {
+	resp := http.post_json(endpoint, wb.to_json()) or {panic(err)}
 
 	return resp
 }

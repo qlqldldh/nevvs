@@ -19,7 +19,7 @@ pub fn filter_old_articles(items []rss.Item) []rss.Item {
 }
 
 pub fn update_article_history(items []rss.Item) ? {
-	mut article_history := os.open_append("articles")?
+	mut article_history := os.open_append(article_history_file)?
 	defer {
 		article_history.close()
 	}
