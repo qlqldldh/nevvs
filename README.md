@@ -30,4 +30,6 @@
 
 ### 4. Run `nevvs`
 
-`./nevvs`
+> env files should be located to same path with nevvs binary file
+
+`./nevvs/nevvs`
