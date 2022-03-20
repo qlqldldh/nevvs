@@ -14,15 +14,15 @@ pub:
 }
 
 fn get_channel(txt string) ?RSSChannel {
-	contents := parse_xml_element(txt, "channel")?
+	contents := parse_xml_element(txt, "channel", false)?
 
 	return RSSChannel {
-		title: parse_xml_element(contents, "title")?,
-		link: parse_xml_element(contents, "link")?,
-		description: parse_xml_element(contents, "description")?,
-		language: parse_xml_element(contents, "language")?,
-		copyright: parse_xml_element(contents, "copyright")?,
-		last_build_date: parse_xml_element(contents, "lastBuildDate")?,
+		title: parse_xml_element(contents, "title", true)?,
+		link: parse_xml_element(contents, "link", true)?,
+		description: parse_xml_element(contents, "description", true)?,
+		language: parse_xml_element(contents, "language", true)?,
+		copyright: parse_xml_element(contents, "copyright", true)?,
+		last_build_date: parse_xml_element(contents, "lastBuildDate", true)?,
 		items: get_items(contents.split("</lastBuildDate>")[1])?,
 	}
 }

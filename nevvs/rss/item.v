@@ -11,14 +11,14 @@ pub:
 }
 
 fn get_item(txt string) ?Item {
-	contents := parse_xml_element(txt, "item")?
+	contents := parse_xml_element(txt, "item", false)?
 
 	return Item {
-		title: parse_xml_element(contents, "title")?,
-		link: parse_xml_element(contents, "link")?,
-		description: remove_cdata_exp(parse_xml_element(contents, "description")?),
-		author: remove_cdata_exp(parse_xml_element(contents, "author")?),
-		pub_date: parse_xml_element(contents, "pubDate")?,
+		title: parse_xml_element(contents, "title", true)?,
+		link: parse_xml_element(contents, "link", true)?,
+		description: parse_xml_element(contents, "description", true)?,
+		author: parse_xml_element(contents, "author", true)?,
+		pub_date: parse_xml_element(contents, "pubDate", true)?,
 	}
 }
 
