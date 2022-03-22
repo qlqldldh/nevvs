@@ -4,12 +4,12 @@ import os
 
 const max_env_cfg_size = 1000
 
-fn open_env_cfg(stage string) ?os.File {
-	return os.open(".env.$stage")
+fn open_env_cfg(env_name string) ?os.File {
+	return os.open(".env.$env_name")
 }
 
-fn load_raw_env_cfg(stage string) ?string {
-	mut env_file := open_env_cfg(stage) or {
+fn load_raw_env_cfg(env_name string) ?string {
+	mut env_file := open_env_cfg(env_name) or {
 		return error("ERROR: opening env file failed")
 	}
 	defer {
@@ -42,8 +42,8 @@ fn parse_raw_env_cfg(env_cfg_raw string) map[string]string {
 	return result
 }
 
-pub fn set_env_cfg(stage string) ? {
-	env_cfg_raw := load_raw_env_cfg(stage)?
+pub fn set_env_cfg(env_name string) ? {
+	env_cfg_raw := load_raw_env_cfg(env_name)?
 	cfg_map := parse_raw_env_cfg(env_cfg_raw)
 	mut res_code := 0
 

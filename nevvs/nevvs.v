@@ -28,6 +28,6 @@ pub fn notify_news() {
 }
 
 fn main() {
-	conf.set_env_cfg(os.getenv("STAGE")) or {panic(err)}
+	conf.set_env_cfg(os.getenv("ENV_NAME")) or {panic(err)}
 	notify_news()
 }
