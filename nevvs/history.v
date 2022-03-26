@@ -1,4 +1,4 @@
-module history
+module main
 
 import os
 import rss

@@ -1,10 +1,9 @@
-module messenger
+module main
 
 import json
 import net.http
-import rss
-import history as hist
 
+import rss
 
 pub struct WebHookForm {
 pub:
@@ -41,7 +40,7 @@ fn (wb WebHookForm) to_json() string {
 }
 
 pub fn webhook_from_channel(channel rss.RSSChannel, slack_channel string) WebHookForm {
-	items := hist.filter_old_articles(channel.items)
+	items := filter_old_articles(channel.items)
 
 	return WebHookForm {
 		channel: slack_channel,
