@@ -1,4 +1,4 @@
-module conf
+module main
 
 import os
 
